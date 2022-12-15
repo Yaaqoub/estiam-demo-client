@@ -15,6 +15,11 @@ const routesConfig = [
     path: '/login',
     component: lazy(() => import('src/views/auth/LoginView'))
   },
+  {
+    exact: true,
+    path: '/users',
+    component: lazy(() => import('src/views/users'))
+  },
 ];
 
 const renderRoutes = (routes) => (routes ? (

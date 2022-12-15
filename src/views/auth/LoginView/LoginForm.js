@@ -21,11 +21,14 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
   return (
     <Formik
       initialValues={{
-        email: '',
-        password: ''
+        email: 'aaaaaaaaa@gmail.com',
+        password: 'azertyu'
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+        email: Yup.string().email('Must be a valid email')
+          .max(255)
+          .min(10)
+          .required('Email is required'),
         password: Yup.string().max(255).required('Password is required')
       })}
       onSubmit={async (values, {
@@ -35,8 +38,8 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
       }) => {
         try {
           // Login API request
-          console.log('Login');
-          onSubmitSuccess();
+          console.log(' Login Login Login ');
+          // onSubmitSuccess();
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';
 
