@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   makeStyles,
   Card,
@@ -11,7 +11,8 @@ import {
   Button
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import clsx from "clsx";
+import clsx from 'clsx';
+import UserModal from 'src/components/UserModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {}
@@ -19,6 +20,28 @@ const useStyles = makeStyles((theme) => ({
 
 function UsersTable({ className, users, testButtonClicked, ...rest }) {
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    name: '',
+    username: '',
+    phone: '',
+    companyName: ''
+  });
+
+  const handleUserProfile = (profile) => {
+    setUserProfile({
+      name: profile.name,
+      username: profile.username,
+      phone: profile.phone,
+      companyName: profile.company.name
+    });
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Card
@@ -58,9 +81,9 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
                         fullWidth
                         size="large"
                         variant="contained"
-                        onClick={testButtonClicked}
+                        onClick={() => handleUserProfile(user)}
                       >
-                        Test
+                        Profile
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -70,6 +93,12 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
           </TableBody>
         </Table>
       </Box>
+
+      <UserModal
+        open={open}
+        handleClose={handleClose}
+        userProfile={userProfile}
+      />
     </Card>
   );
 }
