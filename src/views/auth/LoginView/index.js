@@ -58,11 +58,10 @@ function LoginView() {
   const [loginDes, setLoginDes] = useState('...');
 
   const handleSubmitSuccess = () => {
-    history.push('/app');
+    history.push('/app/users');
   };
 
   const testButtonClicked = () => {
-    console.log('Yaaaay');
     setLoginDes('Login to our application');
   };
 

@@ -10,8 +10,8 @@ import {
   FormHelperText,
   makeStyles
 } from '@material-ui/core';
-import authService from 'src/services/authService';
-
+import { login } from 'src/actions/accountActions';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
 
 function LoginForm({ className, onSubmitSuccess, ...rest }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -39,13 +40,8 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
         setSubmitting
       }) => {
         try {
-          // Login API request
-
-          // Example Login API :: We will add redux after
-          authService.login(values.email, values.password).then((res) => {
-            console.log(res);
-          });
-          // onSubmitSuccess();
+          dispatch(login(values.email, values.password));
+          onSubmitSuccess();
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';
 
