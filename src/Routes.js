@@ -23,7 +23,7 @@ const routesConfig = [
     routes: [
       {
         exact: true,
-        path: '/users',
+        path: '/app/users',
         component: lazy(() => import('src/views/users'))
       },
     ]
