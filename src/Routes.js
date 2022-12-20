@@ -10,15 +10,19 @@ import {
 } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
 import BasicLayout from 'src/layouts/BasicLayout';
+import AuthGuard from 'src/components/AuthGuard';
+import GuestGuard from 'src/components/GuestGuard';
 
 const routesConfig = [
   {
     exact: true,
+    guard: GuestGuard,
     path: '/login',
     component: lazy(() => import('src/views/auth/LoginView'))
   },
   {
     path: '/app',
+    guard: AuthGuard,
     layout: BasicLayout,
     routes: [
       {
@@ -36,6 +40,7 @@ const renderRoutes = (routes) => (routes ? (
       {routes.map((route, i) => {
         const Component = route.component;
         const Layout = route.layout || Fragment;
+        const Guard = route.guard || Fragment;
 
         return (
           <Route
@@ -43,11 +48,13 @@ const renderRoutes = (routes) => (routes ? (
             path={route.path}
             exact={route.exact}
             render={(props) => (
-              <Layout>
-                {route.routes
-                  ? renderRoutes(route.routes)
-                  : <Component {...props} />}
-              </Layout>
+              <Guard>
+                <Layout>
+                  {route.routes
+                    ? renderRoutes(route.routes)
+                    : <Component {...props} />}
+                </Layout>
+              </Guard>
             )}
           />
         );
