@@ -3,6 +3,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  SILENT_LOGIN,
   LOGOUT
 } from 'src/actions/accountActions';
 import produce from 'immer';
@@ -30,6 +31,14 @@ const accountReducer = (state = initialState, action) => {
     case LOGIN_FAILURE: {
       return produce(state, () => {
         // Store error message
+      });
+    }
+
+    case SILENT_LOGIN: {
+      const { user } = action.payload;
+
+      return produce(state, (draft) => {
+        draft.user = user;
       });
     }
 
