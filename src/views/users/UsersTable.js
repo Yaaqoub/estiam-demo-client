@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   Card,
@@ -8,7 +8,8 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Button
+  Button,
+  TablePagination
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -17,6 +18,11 @@ import UserModal from 'src/components/UserModal';
 const useStyles = makeStyles((theme) => ({
   root: {}
 }));
+
+// rowPerPage // limit
+function applyPagination(users, page, rowPerPage) {
+  return users.slice(page * rowPerPage, page * rowPerPage + rowPerPage);
+}
 
 function UsersTable({ className, users, testButtonClicked, ...rest }) {
   const classes = useStyles();
@@ -28,6 +34,17 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
     phone: '',
     companyName: ''
   });
+
+  const [page, setPage] = useState(0); // page
+  const [rowPerPage, setRowPerPage] = useState(2); // limit
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPage = (event) => {
+    setRowPerPage(event.target.value);
+  };
 
   const handleUserProfile = (profile) => {
     setUserProfile({
@@ -42,6 +59,8 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const usersToDisplay = applyPagination(users, page, rowPerPage);
 
   return (
     <Card
@@ -64,7 +83,7 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
           </TableHead>
           <TableBody>
             {
-              users && users.map((user) => {
+              usersToDisplay && usersToDisplay.map((user) => {
                 return (
                   <TableRow
                     key={user.id}
@@ -94,6 +113,15 @@ function UsersTable({ className, users, testButtonClicked, ...rest }) {
         </Table>
       </Box>
 
+      <TablePagination
+        component="div"
+        count={users.length}
+        page={page}
+        rowsPerPage={rowPerPage}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleRowsPerPage}
+        rowsPerPageOptions={[2, 5, 10]}
+      />
       <UserModal
         open={open}
         handleClose={handleClose}
