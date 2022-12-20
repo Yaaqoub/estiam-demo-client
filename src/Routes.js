@@ -2,12 +2,14 @@
 import React, {
   lazy,
   Suspense,
+  Fragment
 } from 'react';
 import {
   Switch,
   Route
 } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
+import BasicLayout from 'src/layouts/BasicLayout';
 
 const routesConfig = [
   {
@@ -16,10 +18,16 @@ const routesConfig = [
     component: lazy(() => import('src/views/auth/LoginView'))
   },
   {
-    exact: true,
-    path: '/users',
-    component: lazy(() => import('src/views/users'))
-  },
+    path: '/app',
+    layout: BasicLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/users',
+        component: lazy(() => import('src/views/users'))
+      },
+    ]
+  }
 ];
 
 const renderRoutes = (routes) => (routes ? (
@@ -27,13 +35,20 @@ const renderRoutes = (routes) => (routes ? (
     <Switch>
       {routes.map((route, i) => {
         const Component = route.component;
+        const Layout = route.layout || Fragment;
 
         return (
           <Route
             key={i}
             path={route.path}
             exact={route.exact}
-            render={(props) => (<Component {...props} />)}
+            render={(props) => (
+              <Layout>
+                {route.routes
+                  ? renderRoutes(route.routes)
+                  : <Component {...props} />}
+              </Layout>
+            )}
           />
         );
       })}
