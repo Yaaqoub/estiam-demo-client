@@ -2,11 +2,13 @@ import React from 'react';
 import {
   makeStyles,
   AppBar,
-  Toolbar
+  Toolbar,
+  Box
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { THEMES } from 'src/constants';
+import Account from './Account';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +35,18 @@ function TopBar({ className, ...rest }) {
       {...rest}
     >
       <Toolbar className={classes.toolbar}>
-        test
+        <Box
+          flexGrow={6}
+        />
+        <Box
+          flexGrow={6}
+        />
+        <Box
+          flexGrow={6}
+        />
+        <Box>
+          <Account />
+        </Box>
       </Toolbar>
     </AppBar>
   );
