@@ -10,6 +10,8 @@ import {
   FormHelperText,
   makeStyles
 } from '@material-ui/core';
+import authService from 'src/services/authService';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -21,8 +23,8 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
   return (
     <Formik
       initialValues={{
-        email: 'aaaaaaaaa@gmail.com',
-        password: 'azertyu'
+        email: 'test@test.com',
+        password: '123456'
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email')
@@ -38,7 +40,11 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
       }) => {
         try {
           // Login API request
-          console.log(' Login Login Login ');
+
+          // Example Login API :: We will add redux after
+          authService.login(values.email, values.password).then((res) => {
+            console.log(res);
+          });
           // onSubmitSuccess();
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';
