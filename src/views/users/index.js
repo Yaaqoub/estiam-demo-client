@@ -2,7 +2,8 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useContext
+  useContext,
+  useMemo
 } from 'react';
 import {
   Container,
@@ -23,12 +24,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const doSomethingBig = (test) => {
+  console.log('Processing big data');
+};
+
 function UsersListView() {
   const classes = useStyles();
   const userName = useContext(UserContext);
   const isMountedRef = useIsMountedRef();
   const [usersCount, setUsersCount] = useState(0);
   const [users, setUsers] = useState([]);
+
+  const [test, setTest] = useState('');
+
+  const getData = useMemo(() => {
+    doSomethingBig(test);
+  }, [test]);
 
   const getUsers = useCallback(() => {
     usersService.listUsers()
