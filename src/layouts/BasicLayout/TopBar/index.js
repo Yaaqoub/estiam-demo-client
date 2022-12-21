@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   AppBar,
   Toolbar,
   Box,
   Hidden,
-  IconButton
+  IconButton,
+  Switch
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { THEMES } from 'src/constants';
-import Account from './Account';
 import { Menu as MenuIcon } from 'react-feather';
+import useSettings from 'src/hooks/useSettings';
+import Account from './Account';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,16 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar({ className, onMobileNavOpen, ...rest }) {
   const classes = useStyles();
+  const { settings, saveSettings } = useSettings();
+
+  const [switchState, setSwitchState] = useState(settings.theme === 'LIGHT');
+
+  const handleChangeTheme = (event) => {
+    setSwitchState(event.target.checked);
+    saveSettings({
+      theme: settings.theme === 'LIGHT' ? 'ONE_DARK' : 'LIGHT'
+    });
+  };
 
   return (
     <AppBar
@@ -57,6 +69,13 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
         />
         <Box
           flexGrow={6}
+        />
+        <Switch
+          checked={switchState}
+          onChange={handleChangeTheme}
+          name="changeTheme"
+          color="default"
+          inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
         <Box>
           <Account />
