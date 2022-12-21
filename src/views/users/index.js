@@ -13,6 +13,7 @@ import {
 import Page from 'src/components/Page';
 import usersService from 'src/services/usersService';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import useAxios from 'src/hooks/useAxios';
 import UserContext from 'src/context/UserContext';
 import Header from './Header';
 import UsersTable from './UsersTable';
@@ -32,9 +33,10 @@ function UsersListView() {
   const classes = useStyles();
   const userName = useContext(UserContext);
   const isMountedRef = useIsMountedRef();
+  const [data] = useAxios('https://jsonplaceholder.typicode.com/users');
+
   const [usersCount, setUsersCount] = useState(0);
   const [users, setUsers] = useState([]);
-
   const [test, setTest] = useState('');
 
   const getData = useMemo(() => {
@@ -56,7 +58,7 @@ function UsersListView() {
     console.log(userName);
 
     getUsers();
-  }, [getUsers]);
+  }, [getUsers, data]);
 
   const testButtonClicked = () => {};
 
@@ -69,7 +71,7 @@ function UsersListView() {
         <Header usersCount={usersCount} />
 
         <Box mt={3}>
-          <UsersTable users={users} testButtonClicked={testButtonClicked} />
+          <UsersTable users={data} testButtonClicked={testButtonClicked} />
         </Box>
       </Container>
     </Page>
