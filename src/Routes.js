@@ -6,7 +6,8 @@ import React, {
 } from 'react';
 import {
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
 import BasicLayout from 'src/layouts/BasicLayout';
@@ -21,6 +22,11 @@ const routesConfig = [
     component: lazy(() => import('src/views/auth/LoginView'))
   },
   {
+    exact: true,
+    path: '/404',
+    component: lazy(() => import('src/views/pages/Error404View'))
+  },
+  {
     path: '/app',
     guard: AuthGuard,
     layout: BasicLayout,
@@ -29,7 +35,15 @@ const routesConfig = [
         exact: true,
         path: '/app/users',
         component: lazy(() => import('src/views/users'))
-      },
+      }
+    ]
+  },
+  {
+    path: '*',
+    routes: [
+      {
+        component: () => <Redirect to="/404" />
+      }
     ]
   }
 ];
