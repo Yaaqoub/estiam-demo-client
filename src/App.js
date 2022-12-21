@@ -18,6 +18,7 @@ import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
 import Auth from 'src/components/Auth';
 import CookiesNotification from 'src/components/CookiesNotification';
+import GoogleAnalytics from 'src/components/GoogleAnalytics';
 
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -58,6 +59,7 @@ function App() {
           <SnackbarProvider maxSnack={1}>
             <Router history={history}>
               <Auth>
+                <GoogleAnalytics />
                 <CookiesNotification />
                 <Routes />
               </Auth>
