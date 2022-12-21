@@ -17,6 +17,7 @@ import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
 import Auth from 'src/components/Auth';
+import CookiesNotification from 'src/components/CookiesNotification';
 
 const history = createBrowserHistory();
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
@@ -57,6 +58,7 @@ function App() {
           <SnackbarProvider maxSnack={1}>
             <Router history={history}>
               <Auth>
+                <CookiesNotification />
                 <Routes />
               </Auth>
             </Router>
