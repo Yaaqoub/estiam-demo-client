@@ -1,7 +1,8 @@
 import React, {
   useState,
   useEffect,
-  useCallback
+  useCallback,
+  useContext
 } from 'react';
 import {
   Container,
@@ -10,9 +11,10 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import usersService from 'src/services/usersService';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import UserContext from 'src/context/UserContext';
 import Header from './Header';
 import UsersTable from './UsersTable';
-import useIsMountedRef from 'src/hooks/useIsMountedRef'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 function UsersListView() {
   const classes = useStyles();
+  const userName = useContext(UserContext);
   const isMountedRef = useIsMountedRef();
   const [usersCount, setUsersCount] = useState(0);
   const [users, setUsers] = useState([]);
@@ -38,12 +41,13 @@ function UsersListView() {
   }, []);
 
   useEffect(() => {
+    console.log('Test react context: ');
+    console.log(userName);
+
     getUsers();
   }, [getUsers]);
 
-  const testButtonClicked = () => {
-    console.log('aaaaaaaaaaaa');
-  };
+  const testButtonClicked = () => {};
 
   return (
     <Page
