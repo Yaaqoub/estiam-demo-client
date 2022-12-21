@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import { THEMES } from 'src/constants';
 import { Menu as MenuIcon } from 'react-feather';
 import useSettings from 'src/hooks/useSettings';
+import Logo from 'src/components/Logo';
 import Account from './Account';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     color: 'black'
+  },
+  logo: {
+    maxWidth: '100%',
+    width: 180
   }
 }));
 
@@ -60,6 +65,12 @@ function TopBar({ className, onMobileNavOpen, ...rest }) {
           >
             <MenuIcon />
           </IconButton>
+        </Hidden>
+        <Hidden mdDown>
+          <Logo
+            src="/static/logo-white.png"
+            className={classes.logo}
+          />
         </Hidden>
         <Box
           flexGrow={6}

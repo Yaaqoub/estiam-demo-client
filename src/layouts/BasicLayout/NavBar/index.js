@@ -2,9 +2,11 @@ import React from 'react';
 import {
   makeStyles,
   Drawer,
-  Hidden
+  Hidden,
+  Box
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import Logo from 'src/components/Logo';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -12,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     width: 256,
     top: 64,
     height: 'calc(100% - 64px)'
+  },
+  logo: {
+    maxWidth: '100%'
   }
 }));
 
@@ -28,7 +33,14 @@ function NavBar({ onMobileNavClose, openMobile }) {
           open={openMobile}
           onClose={onMobileNavClose}
         >
-          Test
+          <Box
+            p={2}
+            mt={5}
+            display="flex"
+            justifyContent="center"
+          >
+            <Logo className={classes.logo} />
+          </Box>
         </Drawer>
       </Hidden>
       <Hidden mdDown>
@@ -38,7 +50,14 @@ function NavBar({ onMobileNavClose, openMobile }) {
           classes={{ paper: classes.sideDrawer }}
           open
         >
-          Test
+          <Box
+            p={2}
+            mt={5}
+            display="flex"
+            justifyContent="center"
+          >
+            <Logo className={classes.logo} />
+          </Box>
         </Drawer>
       </Hidden>
     </>
