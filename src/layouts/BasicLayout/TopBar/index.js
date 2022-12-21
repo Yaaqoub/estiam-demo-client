@@ -3,12 +3,15 @@ import {
   makeStyles,
   AppBar,
   Toolbar,
-  Box
+  Box,
+  Hidden,
+  IconButton
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { THEMES } from 'src/constants';
 import Account from './Account';
+import { Menu as MenuIcon } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     minHeight: 64
+  },
+  menuButton: {
+    color: 'black'
   }
 }));
 
-function TopBar({ className, ...rest }) {
+function TopBar({ className, onMobileNavOpen, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -35,6 +41,14 @@ function TopBar({ className, ...rest }) {
       {...rest}
     >
       <Toolbar className={classes.toolbar}>
+        <Hidden lgUp>
+          <IconButton
+            className={classes.menuButton}
+            onClick={onMobileNavOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
         <Box
           flexGrow={6}
         />
@@ -53,7 +67,8 @@ function TopBar({ className, ...rest }) {
 }
 
 TopBar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onMobileNavOpen: PropTypes.func,
 };
 
 export default TopBar;

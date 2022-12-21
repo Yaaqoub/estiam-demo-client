@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 import _ from 'lodash';
-import { colors, createMuiTheme, responsiveFontSizes } from '@material-ui/core';
+import { colors, createMuiTheme } from '@material-ui/core';
 import typography from './typography';
 import { softShadows, strongShadows } from './shadows';
 import { THEMES } from '../constants';
 
 const baseConfig = {
-  direction: 'ltr',
   typography,
   overrides: {
     MuiLinearProgress: {
@@ -109,14 +108,9 @@ export function createTheme(settings = {}) {
     _.merge(
       {},
       baseConfig,
-      themeConfig,
-      { direction: settings.direction }
+      themeConfig
     )
   );
-
-  if (settings.responsiveFontSizes) {
-    theme = responsiveFontSizes(theme);
-  }
 
   return theme;
 }

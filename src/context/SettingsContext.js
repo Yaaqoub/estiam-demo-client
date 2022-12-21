@@ -1,7 +1,6 @@
 import React, {
   createContext,
-  useState,
-  useEffect
+  useState
 } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -11,8 +10,6 @@ import { storeSettings } from 'src/utils/settings';
 const SettingsContext = createContext();
 
 const defaultSettings = {
-  direction: 'ltr',
-  responsiveFontSizes: true,
   theme: THEMES.LIGHT
 };
 
@@ -25,10 +22,6 @@ export function SettingsProvider({ settings, children }) {
     setCurrentSettings(mergedSettings);
     storeSettings(mergedSettings);
   };
-
-  useEffect(() => {
-    document.dir = currentSettings.direction;
-  }, [currentSettings]);
 
   return (
     <SettingsContext.Provider

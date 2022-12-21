@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles
 } from '@material-ui/core';
@@ -38,15 +38,20 @@ const useStyles = makeStyles((theme) => ({
 function BasicLayout({ children }) {
   const classes = useStyles();
 
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
   return (
     <div
       className={classes.root}
     >
       {/* TopBAR */}
-      <TopBar />
+      <TopBar onMobileNavOpen={() => setIsMobileNavOpen(true)} />
 
       {/* NavBar */}
-      <NavBar />
+      <NavBar
+        onMobileNavClose={() => setIsMobileNavOpen(false)}
+        openMobile={isMobileNavOpen}
+      />
 
       {/* Children */}
       <div className={classes.wrapper}>

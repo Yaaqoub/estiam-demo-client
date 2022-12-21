@@ -1,8 +1,10 @@
 import React from 'react';
 import {
   makeStyles,
-  Drawer
+  Drawer,
+  Hidden
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -13,23 +15,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function NavBar() {
+function NavBar({ onMobileNavClose, openMobile }) {
   const classes = useStyles();
 
   return (
     <>
-      <Drawer
-        anchor="left"
-        variant="persistent"
-        classes={{ paper: classes.sideDrawer }}
-        open
-      >
-        Test
-      </Drawer>
+      <Hidden lgUp>
+        <Drawer
+          anchor="left"
+          variant="temporary"
+          classes={{ paper: classes.sideDrawer }}
+          open={openMobile}
+          onClose={onMobileNavClose}
+        >
+          Test
+        </Drawer>
+      </Hidden>
+      <Hidden mdDown>
+        <Drawer
+          anchor="left"
+          variant="persistent"
+          classes={{ paper: classes.sideDrawer }}
+          open
+        >
+          Test
+        </Drawer>
+      </Hidden>
     </>
   );
 }
 
-NavBar.propTypes = {};
+NavBar.propTypes = {
+  onMobileNavClose: PropTypes.func,
+  openMobile: PropTypes.bool,
+};
 
 export default NavBar;
